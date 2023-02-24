@@ -1,25 +1,19 @@
 name: Testing GSSAR
 "on":
-  push:
-    branches:
-      - main
-      - ft/**
-      - bug/**
-      - hotfix/**
-      - release/**
-  pull_request:
-    branches:
-      - main
-      - ft/**
-      - bug/**
-      - hotfix/**
-      - release/**
+  workflow_dispatch:
 jobs:
   CodeQL:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: stelligent/cfn_nag@master
+        with:
+          extra_args: -o sarif
+          output_path: cfn_nag.sarif
+      - uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: cfn_nag.sarif
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
       - name: Autobuild
@@ -36,3 +30,4 @@ jobs:
       - name: Print the Cloud Formation Linter Version & run Linter.
         run: |
           cfn-lint -t ./template.yml
+
