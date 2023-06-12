@@ -34,7 +34,7 @@
   "dependencies": {
     "@aws-sdk/client-iam": "^3.121.0",
     "@aws-sdk/client-ssm": "^3.121.0",
-    "sequelize": "6.19.0",
+    "sequelize": "6.29.0",
     "jszip": "3.7.1"
   }
 }
